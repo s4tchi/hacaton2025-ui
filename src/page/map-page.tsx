@@ -1,5 +1,7 @@
+export const MapPage = () => {
 
-const App = () => {
+
+  
 
   return (
     <div>
@@ -7,5 +9,3 @@ const App = () => {
     </div>
   )
 }
-
-export default App
