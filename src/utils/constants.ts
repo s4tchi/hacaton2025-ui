@@ -18,3 +18,7 @@ export const EDIT_TYPE_STATE: Record<EditType, boolean> = {
 export const initializeYMapsParams = {
    apikey: '0f413fe4-a78e-4d59-9e85-8f8df1924448',
 };
+
+export const ANCHORS_LABEL = 'Метки';
+
+export const PC_CC = 'PC/CC';
