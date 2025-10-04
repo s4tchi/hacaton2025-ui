@@ -1,37 +1,93 @@
-import { YMaps, Map as MY, Placemark } from '@pbe/react-yandex-maps';
+import { YMaps, Map as MY, Placemark, Polyline } from '@pbe/react-yandex-maps';
+import { useMapHandlers } from '../../hook/useMapHandlers';
+import { initializeYMapsParams } from '../../utils/constants';
+import { useMapSearchParams } from '../../hook/useMapSearchParams';
+import { useGeometryPoints } from '../../hook';
+import { useEffect, useMemo } from 'react';
+import { getSensors } from '../../api';
 
-const mapState = { center: [55.76, 37.64], zoom: 10 };
+export const Map = () => {
 
-export function Map() {
+    const { handleOnClick, mapState } = useMapHandlers();
+
+    const { markers, removeMarker, setMarkers } = useMapSearchParams();
+    const { currentPosition, positionHistory } = useGeometryPoints();
+
+    const polyline = useMemo(() => positionHistory.map((point) => [point.x, point.y]),[positionHistory])
+    
+    const handleGetSensors = async () => {
+        const response = await getSensors();
+        setMarkers(response);
+    }
+
+    useEffect(() => {
+        handleGetSensors();
+
+    }, [])
+
     return (
         <YMaps
-            query={{
-                apikey: '0f413fe4-a78e-4d59-9e85-8f8df1924448',
-            }}
+            query={initializeYMapsParams}
         >
-            <MY state={mapState}             
-            onClick={(e: any) => {
-              // Получите координаты точки клика
-              const coords = e.get('coords');
-              console.log('Координаты клика:', coords);
-              // Дальнейшая работа с координатами
-            }}
-                        width="100vw"
-            height="100vh">
-                <Placemark
-                    geometry={{
-                        coordinates: [55.751574, 37.573856]
-                    }}
-                    properties={{
-                    hintContent: 'Собственный значок метки',
-                    balloonContent: 'Это красивая метка'
-                    }}
-                    options={{
-                    iconImageSize: [30, 42],
-                    iconImageOffset: [-3, -42]
-                    }}
-                />
+            <MY
+            state={mapState}             
+            onClick={handleOnClick}
+            width="100vw"
+            height="100vh"
+            >   
+                {/* Линия маршрута */}
+                {polyline.length > 1 && (
+                    <Polyline
+                        geometry={polyline}
+                        options={{
+                            strokeColor: '#FF0000',
+                            strokeWidth: 3,
+                            strokeOpacity: 0.8
+                        }}
+                    />
+                )}
+                
+                {/* Текущая позиция */}
+                {renderCurrentPosition()}
+                
+                {/* Маркеры */}
+                {renderMarkers()}
             </MY>
         </YMaps>
     )
+
+    function renderCurrentPosition() {
+        return (
+                    <Placemark
+                        geometry={[currentPosition.x, currentPosition.y]}
+                        properties={{
+                            hintContent: 'Текущая позиция',
+                        }}
+                        options={{
+                            preset: 'islands#blueDotIcon',
+                            draggable: false,
+                        }}
+                    />
+                )
+    }
+    function renderMarkers() {
+        return markers.map((marker) => (
+            <Placemark
+                key={marker.id}
+                geometry={[marker.x, marker.y]}
+                properties={{
+                    hintContent: `Маркер номер ${marker.id}`,
+                    }}
+                    options={{
+                        preset: 'islands#redDotIcon',
+                        draggable: true,
+                        cursor: 'pointer',
+                        }}
+                    onClick={() => {
+                        console.log(`Клик по маркеру ${marker.id}`);
+                        removeMarker(marker.id);
+                    }}
+                    />
+                ))
+    }
 }
