@@ -1,15 +1,8 @@
-import { useGeometryPoints, useSocket } from "./hook"
-import { Map } from "./components/map"
+import { MapPage } from "./page/map-page";
 
 const App = () => {
-  const { setCurrentPosition } = useGeometryPoints();
-  const { isConnected } = useSocket({ handleSyncObjectPosition: (value: string) => {
-    setCurrentPosition(JSON.parse(value));
-  }});
-
-  return <Map />
-
-  return isConnected ? <Map /> : <p>Disconnected</p>
+  
+  return <MapPage />
 }
 
 export default App
