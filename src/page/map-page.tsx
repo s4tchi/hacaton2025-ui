@@ -1,5 +1,5 @@
 import { Button, Typography } from "antd";
-import { Map } from "../components"
+import { Map, SensorDialog } from "../components"
 import { useMapSearchParams } from "../hook/useMapSearchParams";
 import { EditType } from "../utils/constants";
 import {
@@ -9,8 +9,11 @@ import {
 } from "../utils/map-page-labels";
 import styles from './map-page.module.css';
 import { useGeometryPoints, useSocket } from "../hook";
+import { useState } from "react";
 
 export const MapPage = () => {
+
+  const [sensorDialogIsOpen, setSensorDialogIsOpen] = useState(false);
 
   const { setCurrentPosition } = useGeometryPoints();
   const { isConnected } = useSocket({ handleSyncObjectPosition: (value: string) => {
@@ -37,6 +40,7 @@ export const MapPage = () => {
         >
           {NAVIGATION_BUTTON_LABELS[EditType.ADD_MARKER]}
         </Button>
+        <Button onClick={() => setSensorDialogIsOpen(prev => !prev)}></Button>
         <Typography.Text>
           {MARKERS_COUNT_LABEL} {markers.length}
         </Typography.Text>
@@ -45,6 +49,7 @@ export const MapPage = () => {
         </Typography.Text>
       </div>
       <div className={styles.mapContainer}>
+        <SensorDialog visible={sensorDialogIsOpen} onClose={() => setSensorDialogIsOpen(false)}/>
         <Map />
       </div>
     </div>
