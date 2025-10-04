@@ -8,3 +8,7 @@
   display: flex;
   gap: 16px;
 }
+
+.mapContainer {
+  position: relative;
+}
