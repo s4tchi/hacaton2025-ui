@@ -5,6 +5,7 @@ import { useMapSearchParams } from '../../hook/useMapSearchParams';
 import { useGeometryPoints } from '../../hook';
 import { useEffect, useMemo } from 'react';
 import { getSensors } from '../../api';
+import styles from './map.module.css';
 
 export const Map = () => {
 
@@ -58,13 +59,17 @@ export const Map = () => {
 
     function renderCurrentPosition() {
         return (
-                    <Placemark
-                        geometry={[currentPosition.x, currentPosition.y]}
+            <Placemark
+                    geometry={[47.20247661193515, 38.93639597930583]}
+                        // geometry={[currentPosition.x, currentPosition.y]}
                         properties={{
                             hintContent: 'Текущая позиция',
                         }}
                         options={{
-                            preset: 'islands#blueDotIcon',
+                            iconLayout: 'default#image',
+                            iconImageHref: '/new-moon.png',
+                            iconImageSize: [24, 24],
+                            iconImageOffset: [-12, -12],
                             draggable: false,
                         }}
                     />
@@ -79,8 +84,11 @@ export const Map = () => {
                     hintContent: `Маркер номер ${marker.id}`,
                     }}
                     options={{
-                        preset: 'islands#redDotIcon',
-                        draggable: true,
+                        iconLayout: 'default#image',
+                        iconImageHref: '/anchor.png',
+                        iconImageSize: [32, 32],
+                        iconImageOffset: [-16, -16],
+                        draggable: false,
                         cursor: 'pointer',
                         }}
                     onClick={() => {
