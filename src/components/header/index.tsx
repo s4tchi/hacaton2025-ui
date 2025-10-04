@@ -1,6 +1,6 @@
 import { Typography } from 'antd';
 import styles from './header.module.css';
-import Logo from '../../assets/radar.png';
+import Logo from '/radar.png';
 import { PC_CC } from '../../utils/constants';
 
 export const Header = () => {
