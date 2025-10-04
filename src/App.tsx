@@ -1,4 +1,5 @@
 import { useGeometryPoints, useSocket } from "./hook"
+import { Map } from "./components/map"
 
 const App = () => {
   const { setCurrentPosition } = useGeometryPoints();
@@ -6,7 +7,9 @@ const App = () => {
     setCurrentPosition(JSON.parse(value));
   }});
 
-  return isConnected ? <p>Connected</p> : <p>Disconnected</p>
+  return <Map />
+
+  return isConnected ? <Map /> : <p>Disconnected</p>
 }
 
 export default App
