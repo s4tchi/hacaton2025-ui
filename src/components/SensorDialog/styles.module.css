@@ -8,19 +8,27 @@
     box-sizing: border-box;
     min-width: 300px;
     z-index: 1;
-
     height: 400px;
     border-radius: 16px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
     transition: 0.2s;
-
     display: grid;
-
     grid-template-rows: auto auto 1fr;
-
 }
 
 .hidden {
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.closeButton {
+    padding: 4px;
+    min-width: auto;
+    height: auto;
 }
 
 .form {
@@ -30,9 +38,19 @@
 }
 
 .footer {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: end;
+}
+
+.button_group button {
+    flex-grow: 2;
+}
+
+.button_group {
+    display: flex;
     gap: 16px;
     align-items: end;
 }
