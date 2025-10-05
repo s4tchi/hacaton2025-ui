@@ -1,4 +1,4 @@
-import { YMaps, Map as MY, Placemark, Polyline } from '@pbe/react-yandex-maps';
+import { YMaps, Map as MY, Placemark, Polyline, SearchControl } from '@pbe/react-yandex-maps';
 import { useMapHandlers } from '../../hook/useMapHandlers';
 import { initializeYMapsParams } from '../../utils/constants';
 import { useMapSearchParams } from '../../hook/useMapSearchParams';
@@ -39,6 +39,11 @@ export const Map = () => {
             width="100%"
             height="100%"
             >   
+            <SearchControl
+                options={{
+                    float: 'right',
+                }}
+                />
                 {/* Линия маршрута */}
                 {polyline.length > 1 && (
                     <Polyline
