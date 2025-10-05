@@ -13,7 +13,7 @@ export const Map = () => {
     const { handleOnClick, mapState } = useMapHandlers();
 
     const { markers, removeMarker, setMarkers } = useMapSearchParams();
-    const { positionHistory } = useGeometryPoints();
+    const { currentPosition, positionHistory } = useGeometryPoints();
 
     const polyline = useMemo(() => positionHistory.map((point) => [point.x, point.y]),[positionHistory])
 
