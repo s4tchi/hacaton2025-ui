@@ -9,6 +9,8 @@ interface UseMapSearchParams {
   markers: ISensor[];
   setMarkers: (markers: ISensor[]) => void;
   removeMarker: (id: string) => Promise<void>;
+  selectedCoordinates: { x: number; y: number } | null;
+  setSelectedCoordinates: (coordinates: { x: number; y: number } | null) => void;
 }
 
 export const useMapSearchParams = create<UseMapSearchParams>(
@@ -23,4 +25,6 @@ export const useMapSearchParams = create<UseMapSearchParams>(
     await deleteSensors(id)
     set((state) => ({ markers: state.markers.filter((marker) => marker.id !== id) }))
   },
+  selectedCoordinates: null,
+  setSelectedCoordinates: (coordinates: { x: number; y: number } | null) => set({ selectedCoordinates: coordinates }),
 }))
