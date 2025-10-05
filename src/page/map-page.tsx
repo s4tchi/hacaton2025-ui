@@ -1,5 +1,5 @@
 import { Button, Typography } from "antd";
-import { Map, SensorDialog } from "../components"
+import { InfoBar, Map, SensorDialog } from "../components"
 import { useMapSearchParams } from "../hook/useMapSearchParams";
 import { EditType } from "../utils/constants";
 import {
@@ -51,6 +51,7 @@ export const MapPage = () => {
       <div className={styles.mapContainer}>
         <SensorDialog visible={sensorDialogIsOpen} onClose={() => setSensorDialogIsOpen(false)}/>
         <Map />
+        <InfoBar />
       </div>
     </div>
   )
