@@ -36,7 +36,7 @@ export const Anchorlist = () => {
       size="large"
       dataSource={markers}
       renderItem={(item) => <AnchorListItem item={item} isActive={activeId === item.id} setActiveId={setActiveId}></AnchorListItem>}
-      header={<Text type="secondary" style={{ fontSize: '20px', padding: '10px' }}>Метки</Text>}
+      style={{ overflow: 'scroll', height: '75%' }}
       split={false}
     />
     )

@@ -37,8 +37,8 @@ export const Map = () => {
             <MY
             state={mapState}             
             onClick={handleOnClick}
-            width="100vw"
-            height="100vh"
+            width="100%"
+            height="100%"
             >   
                 {/* Линия маршрута */}
                 {polyline.length > 1 && (
