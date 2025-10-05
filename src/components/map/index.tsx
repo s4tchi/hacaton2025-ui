@@ -5,6 +5,8 @@ import { useMapSearchParams } from '../../hook/useMapSearchParams';
 import { useGeometryPoints } from '../../hook';
 import { useEffect, useMemo } from 'react';
 import { getSensors } from '../../api';
+import { SensorDialog } from '../SensorDialog';
+import { useSensorDialog } from '../../hook/useSensorDialog';
 
 export const Map = () => {
 
@@ -14,7 +16,7 @@ export const Map = () => {
     const { currentPosition, positionHistory } = useGeometryPoints();
 
     const polyline = useMemo(() => positionHistory.map((point) => [point.x, point.y]),[positionHistory])
-    
+
     const handleGetSensors = async () => {
         const response = await getSensors();
         setMarkers(response);
@@ -25,15 +27,18 @@ export const Map = () => {
 
     }, [])
 
+    const { currentSensor, setCurrentSensor, isDialogOpen, setIsDialogOpen } = useSensorDialog();
+
     return (
+        <>
         <YMaps
             query={initializeYMapsParams}
         >
             <MY
             state={mapState}             
             onClick={handleOnClick}
-            width="100vw"
-            height="100vh"
+            width="100%"
+            height="100%"
             >   
                 {/* Линия маршрута */}
                 {polyline.length > 1 && (
@@ -53,18 +58,39 @@ export const Map = () => {
                 {/* Маркеры */}
                 {renderMarkers()}
             </MY>
+            {renderModal()}
         </YMaps>
+        </>
     )
+
+    function renderModal() {
+        if(!currentSensor) return null;
+
+        return (
+         <SensorDialog
+          visible={isDialogOpen}
+          onClose={() => {
+            setIsDialogOpen(false);
+            setCurrentSensor(null);
+          }}
+          senser={currentSensor}
+        />
+        )
+    }
 
     function renderCurrentPosition() {
         return (
-                    <Placemark
+            <Placemark
+                    // geometry={[currentPosition.x, 38.93639597930583]}
                         geometry={[currentPosition.x, currentPosition.y]}
                         properties={{
                             hintContent: 'Текущая позиция',
                         }}
                         options={{
-                            preset: 'islands#blueDotIcon',
+                            iconLayout: 'default#image',
+                            iconImageHref: '/new-moon.png',
+                            iconImageSize: [24, 24],
+                            iconImageOffset: [-12, -12],
                             draggable: false,
                         }}
                     />
@@ -79,8 +105,11 @@ export const Map = () => {
                     hintContent: `Маркер номер ${marker.id}`,
                     }}
                     options={{
-                        preset: 'islands#redDotIcon',
-                        draggable: true,
+                        iconLayout: 'default#image',
+                        iconImageHref: '/anchor.png',
+                        iconImageSize: [32, 32],
+                        iconImageOffset: [-16, -16],
+                        draggable: false,
                         cursor: 'pointer',
                         }}
                     onClick={() => {

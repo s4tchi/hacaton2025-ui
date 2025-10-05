@@ -3,12 +3,13 @@ import cn from 'classnames';
 import styles from './styles.module.css'
 import { Button, Input, Typography } from 'antd';
 import { ISensor } from '../../interface';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createSensors, deleteSensors } from '../../api';
+import { updateSensors } from '../../api/updateSensors';
 
 interface IProps {
     visible: boolean
-    senser?: ISensor
+    senser: ISensor
     onClose: () => void
 }
 
@@ -22,13 +23,28 @@ export function SensorDialog({ visible, senser, onClose }: IProps) {
 
     const onClickSave = async() => {
         if (senser) {
-            // update
+            await updateSensors(Number(senserData.id), senserData);
             return;
         }
 
         await createSensors(senserData);
         onClose();
     }    
+
+    useEffect(() => {
+        if(senser.id !== senserData.id) {
+            setSenserData(senser);
+        }
+    }, [
+        senser,
+        setSenserData,
+        senserData
+    ])
+
+
+    if (!visible) {
+        return null;
+    }
 
     return <div className={cn(styles.dialog, {[styles.hidden]: !visible})}>
         <Typography.Title level={4}>{senser ? 'Редактировать метку' : 'Добавить метку'}</Typography.Title>

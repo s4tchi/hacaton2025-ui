@@ -1,13 +1,16 @@
  .bar {
     background: white;
-    padding: 20px;
+    padding: 20px 40px;
     box-sizing: border-box;
-    min-width: 300px;
+    width: 90%;
     z-index: 1;
 
     border-radius: 16px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
     transition: 0.2s;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
  }   
 
  .wrapper {

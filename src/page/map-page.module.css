@@ -1,7 +1,6 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 32px;
 }
 
 .navigation_bar {
@@ -11,4 +10,11 @@
 
 .mapContainer {
   position: relative;
+}
+
+.main {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 300px 1fr;
 }
