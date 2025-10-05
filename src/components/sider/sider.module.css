@@ -5,7 +5,6 @@
     flex-direction: column;
     flex-basis: 400px;
     height: 100vh;
-    overflow: scroll;
 }
 
 .text_container {

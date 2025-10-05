@@ -3,7 +3,7 @@ import { Typography } from "antd";
 import styles from './anchor-list.module.css';
 import { useMapSearchParams } from '../../hook/useMapSearchParams';
 import { ISensor } from '../../interface';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSensorDialog } from '../../hook/useSensorDialog';
 const { Text } = Typography;
 
@@ -30,13 +30,18 @@ const AnchorListItem = ({item, isActive, setActiveId}: { item: ISensor, isActive
 export const Anchorlist = () => {
     const { markers } = useMapSearchParams();
     const [activeId, setActiveId] = useState<string | null>(null);
+    const { currentSensor } = useSensorDialog();
+
+    useEffect(() => {
+      if (!currentSensor) setActiveId(null);
+    }, [currentSensor])
 
     return (
     <List
       size="large"
       dataSource={markers}
       renderItem={(item) => <AnchorListItem item={item} isActive={activeId === item.id} setActiveId={setActiveId}></AnchorListItem>}
-      style={{ overflow: 'scroll', height: '75%' }}
+      style={{ overflow: 'auto', height: '75%' }}
       split={false}
     />
     )

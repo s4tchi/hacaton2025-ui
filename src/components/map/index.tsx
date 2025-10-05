@@ -24,7 +24,6 @@ export const Map = () => {
 
     useEffect(() => {
         handleGetSensors();
-
     }, [])
 
     const { currentSensor, setCurrentSensor, isDialogOpen, setIsDialogOpen } = useSensorDialog();
@@ -64,14 +63,13 @@ export const Map = () => {
     )
 
     function renderModal() {
-        if(!currentSensor) return null;
-
         return (
          <SensorDialog
           visible={isDialogOpen}
           onClose={() => {
             setIsDialogOpen(false);
             setCurrentSensor(null);
+            handleGetSensors();
           }}
           senser={currentSensor}
         />
