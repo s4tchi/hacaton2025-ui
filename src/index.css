@@ -31,3 +31,34 @@ body {
     box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
   }
 }
+
+/* поле ввода — без рамки по умолчанию */
+.ymaps-2-1-79-searchbox-input input {
+  font-size: 16px !important;
+  border: 2px solid transparent !important; /* прозрачная рамка по умолчанию */
+  padding: 8px 12px !important; 
+  height: 40px !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.2s ease-in-out;
+}
+
+/* рамка при активном введении текста (фокусе) */
+.ymaps-2-1-79-searchbox-input input:focus {
+  border-color: #007bff !important; /* синяя рамка */
+  outline: none !important; /* убрать стандартный outline */
+}
+
+/* кнопка поиска */
+.ymaps-2-1-79-searchbox-button {
+  background-color: #007bff !important;
+  color: #fff !important;
+  height: 40px !important;
+  line-height: 36px !important;
+  padding: 0 12px !important;
+  font-weight: 500;
+}
+
+.ymaps-2-1-79-searchbox {
+  margin-right: 20px; /* например, отступ справа */
+  margin-top: 20px;   /* отступ сверху */
+}
