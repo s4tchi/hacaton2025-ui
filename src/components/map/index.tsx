@@ -5,7 +5,8 @@ import { useMapSearchParams } from '../../hook/useMapSearchParams';
 import { useGeometryPoints } from '../../hook';
 import { useEffect, useMemo } from 'react';
 import { getSensors } from '../../api';
-import styles from './map.module.css';
+import { SensorDialog } from '../SensorDialog';
+import { useSensorDialog } from '../../hook/useSensorDialog';
 
 export const Map = () => {
 
@@ -15,7 +16,7 @@ export const Map = () => {
     const { currentPosition, positionHistory } = useGeometryPoints();
 
     const polyline = useMemo(() => positionHistory.map((point) => [point.x, point.y]),[positionHistory])
-    
+
     const handleGetSensors = async () => {
         const response = await getSensors();
         setMarkers(response);
@@ -26,7 +27,10 @@ export const Map = () => {
 
     }, [])
 
+    const { currentSensor, setCurrentSensor, isDialogOpen, setIsDialogOpen } = useSensorDialog();
+
     return (
+        <>
         <YMaps
             query={initializeYMapsParams}
         >
@@ -54,8 +58,25 @@ export const Map = () => {
                 {/* Маркеры */}
                 {renderMarkers()}
             </MY>
+            {renderModal()}
         </YMaps>
+        </>
     )
+
+    function renderModal() {
+        if(!currentSensor) return null;
+
+        return (
+         <SensorDialog
+          visible={isDialogOpen}
+          onClose={() => {
+            setIsDialogOpen(false);
+            setCurrentSensor(null);
+          }}
+          senser={currentSensor}
+        />
+        )
+    }
 
     function renderCurrentPosition() {
         return (
