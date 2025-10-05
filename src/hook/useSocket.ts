@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client'
+import { API_URL } from '../utils/api_constants';
 
-const socket = io('http://localhost:3000');
+const socket = io(API_URL);
 
 interface ISocketProps {
     handleSyncObjectPosition: (value: string) => void;   
@@ -25,11 +26,11 @@ export function useSocket({ handleSyncObjectPosition }: ISocketProps) {
 
         socket.on('connect', onConnect);
         socket.on('disconnect', onDisconnect);
-        socket.on('syncObjectPosition', onSyncObjectPosition);
+        socket.on('position', onSyncObjectPosition);
         return () => {
             socket.off('connect', onConnect);
             socket.off('disconnect', onDisconnect);
-            socket.off('syncObjectPosition', onSyncObjectPosition);
+            socket.off('position', onSyncObjectPosition);
         }
     }, []);
 
