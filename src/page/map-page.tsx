@@ -1,4 +1,4 @@
-import { Map, SensorDialog } from "../components"
+import { Map } from "../components"
 import { Button, Typography } from "antd";
 import { useMapSearchParams } from "../hook/useMapSearchParams";
 import { EditType } from "../utils/constants";
@@ -9,12 +9,9 @@ import {
 } from "../utils/map-page-labels";
 import styles from './map-page.module.css';
 import { useGeometryPoints, useSocket } from "../hook";
-import { useState } from "react";
 import { Sider } from "../components/sider";
 
 export const MapPage = () => {
-
-  const [sensorDialogIsOpen, setSensorDialogIsOpen] = useState(false);
 
   const { setCurrentPosition } = useGeometryPoints();
   const { isConnected } = useSocket({ handleSyncObjectPosition: (value: string) => {
@@ -51,7 +48,6 @@ export const MapPage = () => {
             </Typography.Text>
           </div>
       <div className={styles.mapContainer}>
-        <SensorDialog visible={sensorDialogIsOpen} onClose={() => setSensorDialogIsOpen(false)}/>
         <Map />
       </div>
         </div>
