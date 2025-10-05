@@ -11,10 +11,10 @@ interface IGeometryPoints {
 }
 
 export const useGeometryPoints = create<IGeometryPoints>((set) => ({
-    currentPosition: { x: 0, y: 0 },
+    currentPosition: { x: 0, y: 0, date: 0 },
     positionHistory: [],
     beacons: [],
 
-    setCurrentPosition: (point: IPoint) => set((state: IGeometryPoints) => ({ currentPosition: point, positionHistory: [...state.positionHistory, point] })),
+    setCurrentPosition: (point: IPoint) => set((state: IGeometryPoints) => ({ currentPosition: {...point, date: Date.now()}, positionHistory: [...state.positionHistory, point] })),
     removeHistory: () => set(() => ({ positionHistory: [] })),
 })); 

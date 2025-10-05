@@ -81,8 +81,8 @@ export const Map = () => {
     function renderCurrentPosition() {
         return (
             <Placemark
-                    geometry={[47.20247661193515, 38.93639597930583]}
-                        // geometry={[currentPosition.x, currentPosition.y]}
+                    // geometry={[currentPosition.x, 38.93639597930583]}
+                        geometry={[currentPosition.x, currentPosition.y]}
                         properties={{
                             hintContent: 'Текущая позиция',
                         }}

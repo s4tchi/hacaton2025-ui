@@ -1,4 +1,4 @@
-import { Map } from "../components"
+import { InfoBar, Map } from "../components"
 import styles from './map-page.module.css';
 import { Sider } from "../components/sider";
 
@@ -10,6 +10,7 @@ export const MapPage = () => {
           
       <div className={styles.mapContainer}>
         <Map />
+        <InfoBar />
       </div>
 </div>
   )
