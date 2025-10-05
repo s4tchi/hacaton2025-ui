@@ -17,7 +17,7 @@ interface IProps {
 }
 
 export function SensorDialog({ visible, senser, onClose }: IProps) {
-    const [senserData, setSenserData] = useState<ISensor>(senser ?? { id: '', x: 0, y: 0, name: '' });
+    const [senserData, setSenserData] = useState<ISensor>(senser ?? { id: '', x: 0, y: 0, name: '', date: Date.now() });
     const [isSelectingLocation, setIsSelectingLocation] = useState(false);
     const [nameError, setNameError] = useState(false);
     const { setEditType, selectedCoordinates, setSelectedCoordinates } = useMapSearchParams();
@@ -37,7 +37,7 @@ export function SensorDialog({ visible, senser, onClose }: IProps) {
 
     const onClickSave = async() => {
         // Проверяем, что имя заполнено
-        if (!senserData.id.trim()) {
+        if (!senserData.name.trim()) {
             setNameError(true);
             return;
         }
@@ -67,7 +67,7 @@ export function SensorDialog({ visible, senser, onClose }: IProps) {
     }
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSenserData(prev => ({ ...prev, id: e.target.value }));
+        setSenserData(prev => ({ ...prev, name: e.target.value }));
         if (nameError) {
             setNameError(false);
         }
@@ -80,7 +80,7 @@ export function SensorDialog({ visible, senser, onClose }: IProps) {
             setNameError(false);
         } else {
             // Режим создания - очищаем поля
-            setSenserData({ id: '', x: 0, y: 0, name: '' });
+            setSenserData({ id: '', x: 0, y: 0, name: '', date: Date.now() });
             setNameError(false);
         }
     }, [senser])
