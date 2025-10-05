@@ -4,12 +4,17 @@ import styles from './anchor-list.module.css';
 import { useMapSearchParams } from '../../hook/useMapSearchParams';
 import { ISensor } from '../../interface';
 import { useState } from 'react';
+import { useSensorDialog } from '../../hook/useSensorDialog';
 const { Text } = Typography;
 
 const AnchorListItem = ({item, isActive, setActiveId}: { item: ISensor, isActive: boolean, setActiveId: React.Dispatch<React.SetStateAction<string | null>>}) => {
   const textStyle = isActive ? { color: '#1677ff', fontWeight: '600' } : {};
+
+  const { setCurrentSensor, setIsDialogOpen } = useSensorDialog();
   const handleClick = () => {
     setActiveId(item.id)
+    setCurrentSensor(item);
+    setIsDialogOpen(true);
   }
 
   return (
